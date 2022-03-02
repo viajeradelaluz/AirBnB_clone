@@ -37,9 +37,11 @@ class FileStorage():
             """
         from ..base_model import BaseModel
 
-        if os.path.exists(self.__file_path):
+        try:
             with open(self.__file_path, mode='r') as jsonfile:
                 file_objects = json.load(jsonfile).items()
                 for key, value in file_objects:
                     new_object = eval(value["__class__"])(**value)
                     self.new(new_object)
+        except:
+            pass
