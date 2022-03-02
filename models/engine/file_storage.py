@@ -2,7 +2,8 @@
 """ File Storage class.
     """
 
-import json, os
+import json
+import os
 
 
 class FileStorage():
