@@ -29,7 +29,6 @@ class BaseModel(ABC):
             if "updated_at" in kwargs.keys():
                 u_new_value = datetime.fromisoformat(kwargs["updated_at"])
                 kwargs["updated_at"] = u_new_value
-
             self.__dict__.update(**kwargs)
 
     def __str__(self):
@@ -54,5 +53,4 @@ class BaseModel(ABC):
             else:
                 dictionary[key] = value
         dictionary["__class__"] = self.__class__.__name__
-
         return (dictionary)
