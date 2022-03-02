@@ -1,26 +1,30 @@
 #!/usr/bin/python3
-"""
-File Storage class
-"""
+""" File Storage class.
+    """
 
-import json
-import os
+import json, os
+
 
 class FileStorage():
-    """
-    File Storage engine for HBnB
-    """
+    """ File Storage engine for HBnB.
+        """
     __file_path = "file.json"
     __objects = dict()
 
     def all(self):
+        """ Returns the dictionary __objects.
+            """
         return self.__objects
 
     def new(self, obj):
+        """ Sets the obj with <ojb class name>.id in __objects.
+            """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.__objects[key] = obj
-    
+
     def save(self):
+        """ Serializes __objetcs to a JSON file.
+            """
         new_dict = {}
         for (key, value) in self.__objects.items():
             new_dict[key] = value.to_dict()
@@ -28,8 +32,14 @@ class FileStorage():
             json.dump(new_dict, jsonfile)
 
     def reload(self):
+        """ Deserializes the JSON file to __objetcs.
+            """
+        from ..base_model import BaseModel
+
         if os.path.exists(self.__file_path):
             with open(self.__file_path, mode='r') as jsonfile:
-                create_dict = json.load(jsonfile)
-                for (key, value) in create_dict:
-                    self.__objects = """???"""
+                file_objects = json.load(jsonfile).items()
+
+                for key, value in file_objects:
+                    new_object = eval(value["__class__"])(**value)
+                    self.new(new_object)
