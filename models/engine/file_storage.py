@@ -3,7 +3,6 @@
     """
 
 import json
-import os
 
 
 class FileStorage():
@@ -36,12 +35,11 @@ class FileStorage():
         """ Deserializes the JSON file to __objetcs.
             """
         from ..base_model import BaseModel
-
+        from ..user import User
         try:
             with open(self.__file_path, mode='r') as jsonfile:
                 file_objects = json.load(jsonfile).items()
                 for key, value in file_objects:
-                    new_object = eval(value["__class__"])(**value)
-                    self.new(new_object)
-        except:
-            pass
+                    eval(value["__class__"])(**value)
+        except Exception:
+            return
