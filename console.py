@@ -3,6 +3,7 @@
     """
 
 
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -57,15 +58,11 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
-        try:
-            with open(json_file) as file:
-                file_dict = json.load(file)
-        except Exception:
-            return
+
+        file_dict = storage.all()
         key_to_search = "{}.{}".format(args[0], args[1])
         if key_to_search in file_dict.keys():
-            instance = eval(args[0])(**file_dict[key_to_search])
-            print(instance)
+            print(file_dict[key_to_search])
         else:
             print("** no instance found **")
 
@@ -82,34 +79,24 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
+        file_dict = storage.all()
         key_to_search = "{}.{}".format(args[0], args[1])
-        try:
-            with open(json_file) as file:
-                file_dict = json.load(file)
-                if key_to_search in file_dict.keys():
-                    file_dict.pop(key_to_search)
-                else:
-                    print("** no instance found **")
-                    return
-            with open(json_file, mode='w') as file:
-                json.dump(file_dict, file)
-        except Exception:
+        if key_to_search in file_dict.keys():
+            file_dict.pop(key_to_search)
+            storage.save()
+        else:
+            print("** no instance found **")
             return
 
     def do_all(self, line):
         """ Prints all string representation of all instances.
             """
         args = line.split()
-        try:
-            with open(json_file) as file:
-                file_dict = json.load(file)
-        except Exception:
-            return
+        file_dict = storage.all()
         if len(args) == 0:
             to_print = list()
             for key, value in file_dict.items():
-                instance = eval(value["__class__"])(**value)
-                to_print.append(instance.__str__())
+                to_print.append(value.__str__())
             print(to_print)
             return
         if len(args) > 0 and args[0] not in classes:
@@ -118,9 +105,8 @@ class HBNBCommand(cmd.Cmd):
         if args[0] in classes:
             to_print = list()
             for key, value in file_dict.items():
-                if args[0] == value["__class__"]:
-                    instance = eval(args[0])(**value)
-                    to_print.append(instance.__str__())
+                if args[0] == value.to_dict()["__class__"]:
+                    to_print.append(value.__str__())
             print(to_print)
             return
 
@@ -137,26 +123,21 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
+        file_dict = storage.all()
         key_to_search = "{}.{}".format(args[0], args[1])
-        try:
-            with open(json_file) as file:
-                file_dict = json.load(file)
-                if key_to_search in file_dict.keys():
-                    if len(args) == 2:
-                        print("** attribute name missing **")
-                        return
-                    if len(args) == 3:
-                        print("** value missing **")
-                        return
-                    instance = eval(args[0])(**file_dict[key_to_search])
-                    setattr(instance, args[2], args[3])
-                    file_dict[key_to_search] = instance.to_dict()
-                else:
-                    print("** no instance found **")
-                    return
-            with open(json_file, mode='w') as file:
-                json.dump(file_dict, file)
-        except Exception:
+
+        if key_to_search in file_dict.keys():
+            if len(args) == 2:
+                print("** attribute name missing **")
+                return
+            if len(args) == 3:
+                print("** value missing **")
+                return
+            instance = file_dict[key_to_search]
+            setattr(instance, args[2], args[3])
+            storage.save()
+        else:
+            print("** no instance found **")
             return
 
     def emptyline(self):
