@@ -8,7 +8,7 @@ from models.base_model import BaseModel
 class Place(BaseModel):
     """ Place class for HBnB. Inherits from BaseModel
         """
-    
+
     city_id = ""
     user_id = ""
     name = ""

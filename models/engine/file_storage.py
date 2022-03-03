@@ -34,8 +34,14 @@ class FileStorage():
     def reload(self):
         """ Deserializes the JSON file to __objetcs.
             """
+        from ..amenity import Amenity
         from ..base_model import BaseModel
+        from ..city import City
+        from ..place import Place
+        from ..review import Review
+        from ..state import State
         from ..user import User
+
         try:
             with open(self.__file_path, mode='r') as jsonfile:
                 file_objects = json.load(jsonfile).items()
