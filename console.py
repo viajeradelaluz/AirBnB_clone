@@ -2,7 +2,6 @@
 """ Command interpreter to manage the AirBnB objects.
     """
 
-
 from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -12,7 +11,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import cmd
-import json
 import shlex
 
 classes = ["BaseModel", "User", "State", "City",

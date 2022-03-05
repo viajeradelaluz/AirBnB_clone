@@ -28,7 +28,7 @@ class BaseModel:
                 u_new_value = datetime.fromisoformat(kwargs["updated_at"])
                 kwargs["updated_at"] = u_new_value
             self.__dict__.update(**kwargs)
-            storage.new(self)
+        storage.new(self)
 
     def __str__(self):
         """ Prints an instances representation.
