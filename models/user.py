@@ -9,10 +9,10 @@ class User(BaseModel):
     """ User class - Inherits from BaseModel and used to manage HBnB's users
         """
 
-    email = ""
-    pasword = ""
-    first_name = ""
-    last_name = ""
+    email = str()
+    password = str()
+    first_name = str()
+    last_name = str()
 
     def __init__(self, *args, **kwargs):
         """ Init method for User
