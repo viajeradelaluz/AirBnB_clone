@@ -2,12 +2,10 @@
 """ Module with Unittest for the FileStorage class.
     """
 import inspect
-import json
-import os
 import unittest
-import uuid
 
 from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
 
 
 class TestBaseModel(unittest.TestCase):
@@ -42,12 +40,22 @@ class TestBaseModel(unittest.TestCase):
             """
         self.assertIsInstance(self.b, FileStorage)
 
-    def test_base_assigment_arguments(self):
-        """ Test FileStorage instance assigment with arguments.
+    def test_save_method(self):
+        """ Check the save() method.
             """
-        pass
+        b1 = BaseModel()
+        self.b.new(b1)
+        self.b.save()
+        self.assertTrue(self.b.__file_path)
+        self.assertTrue(self.b.__objects)
 
     def test_reload_method(self):
         """ Check the reload() method.
             """
-        pass
+        b1 = BaseModel()
+        self.b.new(b1)
+        self.b.save()
+        key_to_search = "BaseModel.{}".format(b1.id)
+        self.b.reload()
+        file_dict = self.b.all()
+        self.assertTrue(key_to_search in file_dict.keys())
