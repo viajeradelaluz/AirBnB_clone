@@ -8,4 +8,9 @@ You won’t implement all the features.
 Only some of them to cover all fundamental concepts.
 The higher level programming track.
 
+<<<<<<< HEAD
 Branch test by Alejo :3 :3
+=======
+Branch test.
+Viajeradelaluz
+>>>>>>> viajeradelaluz
