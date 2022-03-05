@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Base Model for HBnB
+""" Base Model for the HBnB program.
     """
 
 from datetime import datetime
@@ -12,7 +12,7 @@ class BaseModel:
         """
 
     def __init__(self, *args, **kwargs):
-        """ Initializes the BaseModel.
+        """ Initializes the BaseModel as base-class for the program.
             """
         if not kwargs:
             self.id = str(uuid.uuid4())
@@ -28,7 +28,7 @@ class BaseModel:
                 u_new_value = datetime.fromisoformat(kwargs["updated_at"])
                 kwargs["updated_at"] = u_new_value
             self.__dict__.update(**kwargs)
-        storage.new(self)
+            storage.new(self)
 
     def __str__(self):
         """ Prints an instances representation.
