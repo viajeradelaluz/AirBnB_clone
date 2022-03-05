@@ -53,7 +53,6 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
-
         file_dict = storage.all()
         key_to_search = "{}.{}".format(args[0], args[1])
         if key_to_search in file_dict.keys():
@@ -120,7 +119,6 @@ class HBNBCommand(cmd.Cmd):
             return
         file_dict = storage.all()
         key_to_search = "{}.{}".format(args[0], args[1])
-
         if key_to_search in file_dict.keys():
             if len(args) == 2:
                 print("** attribute name missing **")
