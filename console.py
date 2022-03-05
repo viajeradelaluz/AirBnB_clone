@@ -24,12 +24,7 @@ json_file = "file.json"
 class HBNBCommand(cmd.Cmd):
     """ Contains the entry point of the command interpreter.
         """
-
-    def __init__(self):
-        """ Initialize the command interpreter.
-            """
-        super().__init__()
-        self.prompt = "(hbnb) "
+    prompt = "(hbnb) "
 
     def do_create(self, line):
         """ Creates a new instance of BaseModel.
