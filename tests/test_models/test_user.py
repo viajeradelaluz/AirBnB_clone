@@ -17,7 +17,8 @@ class TestBaseModel(unittest.TestCase):
     def setUp(self):
         """ Method to prepare each single test.
             """
-        self.b = User()
+        kwargs = {"email": "airbnb@mail.com", "first_name": "Betty", "last_name": "Bar", "password": "root"}
+        self.b = User(**kwargs)
         self.b.save()
 
     def test_module_documentation(self):
@@ -83,3 +84,10 @@ class TestBaseModel(unittest.TestCase):
                                              self.b.id, self.b.__dict__)
         b_srt = self.b.__str__()
         self.assertEqual(b_srt_string, b_srt)
+
+    def test_user_attributes(self):
+
+        self.assertTrue(self.b.first_name)
+        self.assertTrue(self.b.last_name)
+        self.assertTrue(self.b.password)
+        self.assertTrue(self.b.email)
