@@ -2,12 +2,11 @@
 """ Module with Unittest for the State class.
     """
 import inspect
-import json
 import os
 import unittest
 
+from models.base_model import BaseModel
 from models.state import State
-
 
 class TestState(unittest.TestCase):
     """ Testing the State class of the program.
@@ -41,6 +40,7 @@ class TestState(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic State instances.
             """
+        self.assertIsInstance(self.state_test, BaseModel)
         self.assertIsInstance(self.state_test, State)
         self.assertTrue(hasattr(self.state_test, "id"))
         self.assertTrue(hasattr(self.state_test, "created_at"))
