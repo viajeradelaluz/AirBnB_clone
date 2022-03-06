@@ -145,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
-        args = (split_line[1].split(')'))[0]
+        args = ((split_line[1].split(')'))[0]).replace(",", "")
         exe_line = "User {}".format(args)
         eval("self.do_{}".format(execute))(exe_line)
 
@@ -153,7 +153,7 @@ class HBNBCommand(cmd.Cmd):
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
-        args = (split_line[1].split(')'))[0]
+        args = ((split_line[1].split(')'))[0]).replace(",", "")
         exe_line = "Amenity {}".format(args)
         eval("self.do_{}".format(execute))(exe_line)
 
@@ -161,7 +161,7 @@ class HBNBCommand(cmd.Cmd):
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
-        args = (split_line[1].split(')'))[0]
+        args = ((split_line[1].split(')'))[0]).replace(",", "")
         exe_line = "BaseModel {}".format(args)
         eval("self.do_{}".format(execute))(exe_line)
 
@@ -169,7 +169,7 @@ class HBNBCommand(cmd.Cmd):
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
-        args = (split_line[1].split(')'))[0]
+        args = ((split_line[1].split(')'))[0]).replace(",", "")
         exe_line = "City {}".format(args)
         eval("self.do_{}".format(execute))(exe_line)
 
@@ -177,7 +177,7 @@ class HBNBCommand(cmd.Cmd):
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
-        args = (split_line[1].split(')'))[0]
+        args = ((split_line[1].split(')'))[0]).replace(",", "")
         exe_line = "Place {}".format(args)
         eval("self.do_{}".format(execute))(exe_line)
 
@@ -185,7 +185,7 @@ class HBNBCommand(cmd.Cmd):
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
-        args = (split_line[1].split(')'))[0]
+        args = ((split_line[1].split(')'))[0]).replace(",", "")
         exe_line = "Review {}".format(args)
         eval("self.do_{}".format(execute))(exe_line)
 
@@ -193,7 +193,7 @@ class HBNBCommand(cmd.Cmd):
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
-        args = (split_line[1].split(')'))[0]
+        args = ((split_line[1].split(')'))[0]).replace(",", "")
         exe_line = "State {}".format(args)
         eval("self.do_{}".format(execute))(exe_line)
 
