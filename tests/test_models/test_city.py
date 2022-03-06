@@ -2,10 +2,10 @@
 """ Module with Unittest for the City class.
     """
 import inspect
-import json
 import os
 import unittest
 
+from models.base_model import BaseModel
 from models.city import City
 
 
@@ -18,8 +18,6 @@ class TestCity(unittest.TestCase):
         """ Method to prepare each single test.
             """
         cls.city_test = City()
-        cls.city_test.state_id = "22"
-        cls.city_test.name = "Kyiv"
         if os.path.exists("file.json"):
             os.rename("file.json", "original_file.json")
 
@@ -43,6 +41,7 @@ class TestCity(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic City instances.
             """
+        self.assertTrue(issubclass(City, BaseModel))
         self.assertIsInstance(self.city_test, City)
         self.assertTrue(hasattr(self.city_test, "id"))
         self.assertTrue(hasattr(self.city_test, "created_at"))
@@ -52,33 +51,9 @@ class TestCity(unittest.TestCase):
         """ Test City instance assigment with attributes.
             """
         self.assertTrue(hasattr(self.city_test, "state_id"))
-        self.assertEqual(self.city_test.to_dict()["state_id"], "22")
         self.assertTrue(hasattr(self.city_test, "name"))
-        self.assertEqual(self.city_test.to_dict()["name"], "Kyiv")
-
-    def test_save_method(self):
-        """ Check the save() method.
-            """
-        self.city_test.save()
-        self.assertTrue(os.path.exists("file.json"))
-        with open("file.json") as file_opened:
-            file_dict = json.load(file_opened)
-        self.assertTrue(self.city_test.to_dict() in file_dict.values())
-
-    def test_to_dict_method(self):
-        """ Check the to_dict() method.
-            """
-        obj_as_dict = self.city_test.to_dict()
-        self.assertEqual(self.city_test.id, obj_as_dict["id"])
-
-    def test_str_method(self):
-        """ Check the __str__() method.
-            """
-        city_fstr = "[{}] ({}) {}".format(self.city_test.__class__.__name__,
-                                          self.city_test.id,
-                                          self.city_test.__dict__)
-        city_str = self.city_test.__str__()
-        self.assertEqual(city_fstr, city_str)
+        self.assertIsInstance(self.city_test.state_id, str)
+        self.assertIsInstance(self.city_test.name, str)
 
     def tearDown(self):
         """ Method to leave each test

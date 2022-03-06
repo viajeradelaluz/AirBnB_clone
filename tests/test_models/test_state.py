@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 """ Module with Unittest for the State class.
     """
+
 import inspect
 import os
 import unittest
 
 from models.base_model import BaseModel
 from models.state import State
+
 
 class TestState(unittest.TestCase):
     """ Testing the State class of the program.
@@ -49,7 +51,7 @@ class TestState(unittest.TestCase):
         """ Test State instance assigment with arguments.
             """
         self.assertTrue(hasattr(self.state_test, "name"))
-        self.assertIsInstance(self.state_test.name, str)       
+        self.assertIsInstance(self.state_test.name, str)
 
     def tearDown(self):
         """ Method to leave each test

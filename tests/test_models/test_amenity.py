@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 """ Module with Unittest for the Amenity class.
     """
+
 import inspect
-import json
 import os
 import unittest
 
 from models.amenity import Amenity
 from models.base_model import BaseModel
+
 
 class TestAmenity(unittest.TestCase):
     """ Testing the Amenity class of the program.

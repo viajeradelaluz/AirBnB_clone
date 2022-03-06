@@ -2,10 +2,10 @@
 """ Module with Unittest for the Review class.
     """
 import inspect
-import json
 import os
 import unittest
 
+from models.base_model import BaseModel
 from models.review import Review
 
 
@@ -18,10 +18,6 @@ class TestReview(unittest.TestCase):
         """ Method to prepare each single test.
             """
         cls.review_test = Review()
-        cls.review_test.place_id = "5698"
-        cls.review_test.user_id = "1542"
-        cls.review_test.text = "Arctic Fox Igloos is a luxurious\
-                                glass igloo resort"
         if os.path.exists("file.json"):
             os.rename("file.json", "original_file.json")
 
@@ -45,6 +41,7 @@ class TestReview(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic Review instances.
             """
+        self.assertTrue(issubclass(Review, BaseModel))
         self.assertIsInstance(self.review_test, Review)
         self.assertTrue(hasattr(self.review_test, "id"))
         self.assertTrue(hasattr(self.review_test, "created_at"))
@@ -56,34 +53,9 @@ class TestReview(unittest.TestCase):
         self.assertTrue(hasattr(self.review_test, "place_id"))
         self.assertTrue(hasattr(self.review_test, "user_id"))
         self.assertTrue(hasattr(self.review_test, "text"))
-
         self.assertIsInstance(self.review_test.place_id, str)
         self.assertIsInstance(self.review_test.user_id, str)
         self.assertIsInstance(self.review_test.text, str)
-
-    def test_save_method(self):
-        """ Check the save() method.
-            """
-        self.review_test.save()
-        self.assertTrue(os.path.exists("file.json"))
-        with open("file.json") as file_opened:
-            file_dict = json.load(file_opened)
-        self.assertTrue(self.review_test.to_dict() in file_dict.values())
-
-    def test_to_dict_method(self):
-        """ Check the to_dict() method.
-            """
-        obj_as_dict = self.review_test.to_dict()
-        self.assertEqual(self.review_test.id, obj_as_dict["id"])
-
-    def test_str_method(self):
-        """ Check the __str__() method.
-            """
-        rew_fstr = "[{}] ({}) {}".format(self.review_test.__class__.__name__,
-                                         self.review_test.id,
-                                         self.review_test.__dict__)
-        rew_str = self.review_test.__str__()
-        self.assertEqual(rew_fstr, rew_str)
 
     def tearDown(self):
         """ Method to leave each test
