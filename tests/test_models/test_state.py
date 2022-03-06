@@ -49,6 +49,7 @@ class TestState(unittest.TestCase):
         """ Test State instance assigment with arguments.
             """
         self.assertTrue(hasattr(self.state_test, "name"))
+        self.assertIsInstance(self.state_test.name, str)       
 
     def tearDown(self):
         """ Method to leave each test
