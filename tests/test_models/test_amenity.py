@@ -7,7 +7,7 @@ import os
 import unittest
 
 from models.amenity import Amenity
-
+from models.base_model import BaseModel
 
 class TestAmenity(unittest.TestCase):
     """ Testing the Amenity class of the program.
@@ -18,7 +18,6 @@ class TestAmenity(unittest.TestCase):
         """ Method to prepare each single test.
             """
         cls.amenity_test = Amenity()
-        cls.amenity_test.name = "Wi-fi"
         if os.path.exists("file.json"):
             os.rename("file.json", "original_file.json")
 
@@ -42,6 +41,7 @@ class TestAmenity(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic Amenity instances.
             """
+        self.assertTrue(issubclass(Amenity, BaseModel))
         self.assertIsInstance(self.amenity_test, Amenity)
         self.assertTrue(hasattr(self.amenity_test, "id"))
         self.assertTrue(hasattr(self.amenity_test, "created_at"))
@@ -51,31 +51,7 @@ class TestAmenity(unittest.TestCase):
         """ Test Amenity instance assigment attributes.
             """
         self.assertTrue(hasattr(self.amenity_test, "name"))
-        self.assertEqual(self.amenity_test.name, "Wi-fi")
-
-    def test_save_method(self):
-        """ Check the save() method.
-            """
-        self.amenity_test.save()
-        self.assertTrue(os.path.exists("file.json"))
-        with open("file.json") as file_opened:
-            file_dict = json.load(file_opened)
-        self.assertTrue(self.amenity_test.to_dict() in file_dict.values())
-
-    def test_to_dict_method(self):
-        """ Check the to_dict() method.
-            """
-        obj_as_dict = self.amenity_test.to_dict()
-        self.assertEqual(self.amenity_test.id, obj_as_dict["id"])
-
-    def test_str_method(self):
-        """ Check the __str__() method.
-            """
-        amnt_fstr = "[{}] ({}) {}".format(self.amenity_test.__class__.__name__,
-                                          self.amenity_test.id,
-                                          self.amenity_test.__dict__)
-        amenity_str = self.amenity_test.__str__()
-        self.assertEqual(amnt_fstr, amenity_str)
+        self.assertIsInstance(self.amenity_test.name, str)
 
     def tearDown(self):
         """ Method to leave each test
