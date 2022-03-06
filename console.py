@@ -131,6 +131,72 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
+    def do_count(self, line):
+        args = line.split()
+        class_count = 0
+        file_list = (storage.all().keys())
+        for key in file_list:
+            to_compare = key.split('.')[0]
+            if to_compare == args[0]:
+                class_count += 1
+        print(class_count)
+
+    def do_User(self, line):
+        in_line = line.split('.')
+        split_line = in_line[1].split('(')
+        execute = split_line[0]
+        args = (split_line[1].split(')'))[0]
+        exe_line = "User {}".format(args)
+        eval("self.do_{}".format(execute))(exe_line)
+
+    def do_Amenity(self, line):
+        in_line = line.split('.')
+        split_line = in_line[1].split('(')
+        execute = split_line[0]
+        args = (split_line[1].split(')'))[0]
+        exe_line = "Amenity {}".format(args)
+        eval("self.do_{}".format(execute))(exe_line)
+
+    def do_BaseModel(self, line):
+        in_line = line.split('.')
+        split_line = in_line[1].split('(')
+        execute = split_line[0]
+        args = (split_line[1].split(')'))[0]
+        exe_line = "BaseModel {}".format(args)
+        eval("self.do_{}".format(execute))(exe_line)
+
+    def do_City(self, line):
+        in_line = line.split('.')
+        split_line = in_line[1].split('(')
+        execute = split_line[0]
+        args = (split_line[1].split(')'))[0]
+        exe_line = "City {}".format(args)
+        eval("self.do_{}".format(execute))(exe_line)
+
+    def do_Place(self, line):
+        in_line = line.split('.')
+        split_line = in_line[1].split('(')
+        execute = split_line[0]
+        args = (split_line[1].split(')'))[0]
+        exe_line = "Place {}".format(args)
+        eval("self.do_{}".format(execute))(exe_line)
+
+    def do_Review(self, line):
+        in_line = line.split('.')
+        split_line = in_line[1].split('(')
+        execute = split_line[0]
+        args = (split_line[1].split(')'))[0]
+        exe_line = "Review {}".format(args)
+        eval("self.do_{}".format(execute))(exe_line)
+
+    def do_State(self, line):
+        in_line = line.split('.')
+        split_line = in_line[1].split('(')
+        execute = split_line[0]
+        args = (split_line[1].split(')'))[0]
+        exe_line = "State {}".format(args)
+        eval("self.do_{}".format(execute))(exe_line)
+
     def emptyline(self):
         """ Empty line to not execute anything.
             """
