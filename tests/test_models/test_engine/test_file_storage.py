@@ -2,7 +2,8 @@
 """ Module with Unittest for the FileStorage class.
     """
 import inspect
-import os.path as path
+import json
+import os
 import unittest
 
 from models.engine.file_storage import FileStorage
@@ -17,6 +18,9 @@ class TestFileStorage(unittest.TestCase):
         """ Method to prepare each single test.
             """
         self.storage_test = FileStorage()
+        self.path = self.storage_test._FileStorage__file_path
+        if os.path.exists(self.path):
+            os.rename(self.path, "original_{}".format(self.path))
 
     def test_module_documentation(self):
         """ Test if FileStorage module is documented.
@@ -43,17 +47,27 @@ class TestFileStorage(unittest.TestCase):
     def test_save_method(self):
         """ Check the save() method.
             """
+        base_model_test = BaseModel()
         self.storage_test.save()
-        self.assertTrue(path.exists(self.storage_test._FileStorage__file_path))
-        self.assertTrue(self.storage_test.all())
+        self.assertTrue(os.path.exists(self.path))
+        with open(self.path) as file:
+            file_dict = json.load(file)
+        self.assertIn(base_model_test.to_dict(), file_dict.values())
 
     def test_reload_method(self):
         """ Check the reload() method.
             """
         base_model_test = BaseModel()
-        self.storage_test.new(base_model_test)
         self.storage_test.save()
-        key_to_search = "BaseModel.{}".format(base_model_test.id)
         self.storage_test.reload()
+        key_to_search = "BaseModel.{}".format(base_model_test.id)
         file_dict = self.storage_test.all()
-        self.assertTrue(key_to_search in file_dict.keys())
+        self.assertFalse(file_dict[key_to_search] is base_model_test)
+
+    def tearDown(self):
+        """ Method to leave each test
+            """
+        if os.path.exists(self.path):
+            os.remove(self.path)
+        if os.path.exists("original_{}".format(self.path)):
+            os.rename("original_{}".format(self.path), self.path)
