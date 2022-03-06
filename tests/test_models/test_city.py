@@ -9,7 +9,7 @@ import unittest
 from models.city import City
 
 
-class TestBaseModel(unittest.TestCase):
+class TestCity(unittest.TestCase):
     """ Testing the City class of the program.
         """
 
@@ -20,6 +20,8 @@ class TestBaseModel(unittest.TestCase):
         cls.city_test = City()
         cls.city_test.state_id = "22"
         cls.city_test.name = "Kyiv"
+        if os.path.exists("file.json"):
+            os.rename("file.json", "original_file.json")
 
     def test_module_documentation(self):
         """ Test if City module is documented.
@@ -77,3 +79,11 @@ class TestBaseModel(unittest.TestCase):
                                           self.city_test.__dict__)
         city_str = self.city_test.__str__()
         self.assertEqual(city_fstr, city_str)
+
+    def tearDown(self):
+        """ Method to leave each test
+            """
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        if os.path.exists("original_file.json"):
+            os.rename("original_file.json", "file.json")

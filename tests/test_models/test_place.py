@@ -9,7 +9,7 @@ import unittest
 from models.place import Place
 
 
-class TestBaseModel(unittest.TestCase):
+class TestPlace(unittest.TestCase):
     """ Testing the Place class of the program.
         """
 
@@ -30,6 +30,8 @@ class TestBaseModel(unittest.TestCase):
         cls.place_test.longitude = 42.6043
         cls.place_test.amenity_ids = ["Lakeside location", "Own kitchenette"
                                       "Private Sauna", "Sky Panorama View"]
+        if os.path.exists("file.json"):
+            os.rename("file.json", "original_file.json")
 
     def test_module_documentation(self):
         """ Test if Place module is documented.
@@ -105,3 +107,11 @@ class TestBaseModel(unittest.TestCase):
                                            self.place_test.__dict__)
         place_str = self.place_test.__str__()
         self.assertEqual(place_fstr, place_str)
+
+    def tearDown(self):
+        """ Method to leave each test
+            """
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        if os.path.exists("original_file.json"):
+            os.rename("original_file.json", "file.json")

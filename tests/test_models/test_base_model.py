@@ -19,6 +19,8 @@ class TestBaseModel(unittest.TestCase):
         """ Method to prepare each single test.
             """
         cls.base_test = BaseModel()
+        if os.path.exists("file.json"):
+            os.rename("file.json", "original_file.json")
 
     def test_module_documentation(self):
         """ Test if BaseModel module is documented.
@@ -81,3 +83,11 @@ class TestBaseModel(unittest.TestCase):
                                           self.base_test.__dict__)
         base_srt = self.base_test.__str__()
         self.assertEqual(base_fstr, base_srt)
+
+    def tearDown(self):
+        """ Method to leave each test
+            """
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        if os.path.exists("original_file.json"):
+            os.rename("original_file.json", "file.json")

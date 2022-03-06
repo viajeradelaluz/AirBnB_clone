@@ -9,7 +9,7 @@ import unittest
 from models.amenity import Amenity
 
 
-class TestBaseModel(unittest.TestCase):
+class TestAmenity(unittest.TestCase):
     """ Testing the Amenity class of the program.
         """
 
@@ -19,6 +19,8 @@ class TestBaseModel(unittest.TestCase):
             """
         cls.amenity_test = Amenity()
         cls.amenity_test.name = "Wi-fi"
+        if os.path.exists("file.json"):
+            os.rename("file.json", "original_file.json")
 
     def test_module_documentation(self):
         """ Test if Amenity module is documented.
@@ -74,3 +76,11 @@ class TestBaseModel(unittest.TestCase):
                                           self.amenity_test.__dict__)
         amenity_str = self.amenity_test.__str__()
         self.assertEqual(amnt_fstr, amenity_str)
+
+    def tearDown(self):
+        """ Method to leave each test
+            """
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        if os.path.exists("original_file.json"):
+            os.rename("original_file.json", "file.json")

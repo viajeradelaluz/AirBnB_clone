@@ -9,7 +9,7 @@ class State(BaseModel):
     """ Inherits from BaseModel, used to manage State info.
         """
 
-    name = ""
+    name = str()
 
     def __init__(self, *args, **kwargs):
         """ Initialize the State class.

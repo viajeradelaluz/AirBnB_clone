@@ -9,7 +9,7 @@ import unittest
 from models.review import Review
 
 
-class TestBaseModel(unittest.TestCase):
+class TestReview(unittest.TestCase):
     """ Testing the Review class of the program.
         """
 
@@ -22,6 +22,8 @@ class TestBaseModel(unittest.TestCase):
         cls.review_test.user_id = "1542"
         cls.review_test.text = "Arctic Fox Igloos is a luxurious\
                                 glass igloo resort"
+        if os.path.exists("file.json"):
+            os.rename("file.json", "original_file.json")
 
     def test_module_documentation(self):
         """ Test if Review module is documented.
@@ -82,3 +84,11 @@ class TestBaseModel(unittest.TestCase):
                                          self.review_test.__dict__)
         rew_str = self.review_test.__str__()
         self.assertEqual(rew_fstr, rew_str)
+
+    def tearDown(self):
+        """ Method to leave each test
+            """
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        if os.path.exists("original_file.json"):
+            os.rename("original_file.json", "file.json")

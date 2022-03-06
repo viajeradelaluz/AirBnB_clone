@@ -5,20 +5,21 @@ import inspect
 import json
 import os
 import unittest
-import uuid
 
 from models.state import State
 
 
-class TestBaseModel(unittest.TestCase):
+class TestState(unittest.TestCase):
     """ Testing the State class of the program.
         """
 
     def setUp(self):
         """ Method to prepare each single test.
             """
-        self.b = State()
-        self.b.save()
+        self.state_test = State()
+        self.state_test.name = "Cundinamarca"
+        if os.path.exists("file.json"):
+            os.rename("file.json", "original_file.json")
 
     def test_module_documentation(self):
         """ Test if State module is documented.
@@ -40,46 +41,45 @@ class TestBaseModel(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic State instances.
             """
-        self.assertIsInstance(self.b, State)
-        self.assertTrue(hasattr(self.b, "id"))
-        self.assertTrue(hasattr(self.b, "created_at"))
-        self.assertTrue(hasattr(self.b, "updated_at"))
-
-    def test_base_id_assigment(self):
-        """ Test if the id of the instance is UUID v4.
-            """
-        uuid_v4 = uuid.UUID(self.b.id, version=4)
-        self.assertEqual(str(uuid_v4), self.b.id)
+        self.assertIsInstance(self.state_test, State)
+        self.assertTrue(hasattr(self.state_test, "id"))
+        self.assertTrue(hasattr(self.state_test, "created_at"))
+        self.assertTrue(hasattr(self.state_test, "updated_at"))
 
     def test_base_assigment_arguments(self):
         """ Test State instance assigment with arguments.
             """
-        b = State(15)
-        b.name = "I'm a State"
-        self.assertTrue(hasattr(b, "name"))
-        self.assertEqual(b.to_dict()["name"], "I'm a State")
-        self.assertFalse(hasattr(b, "15"))
+        self.assertTrue(hasattr(self.state_test, "name"))
+        self.assertEqual(self.state_test.to_dict()["name"], "Cundinamarca")
 
     def test_save_method(self):
         """ Check the save() method.
             """
-        b_save = State()
-        b_save.save()
+        self.state_test.save()
         self.assertTrue(os.path.exists("file.json"))
         with open("file.json") as file_opened:
             file_dict = json.load(file_opened)
-        self.assertTrue(b_save.to_dict() in file_dict.values())
+        self.assertTrue(self.state_test.to_dict() in file_dict.values())
 
     def test_to_dict_method(self):
         """ Check the to_dict() method.
             """
-        obj_as_dict = self.b.to_dict()
-        self.assertEqual(self.b.id, obj_as_dict["id"])
+        obj_as_dict = self.state_test.to_dict()
+        self.assertEqual(self.state_test.id, obj_as_dict["id"])
 
     def test_str_method(self):
         """ Check the __str__() method.
             """
-        b_srt_string = "[{}] ({}) {}".format(self.b.__class__.__name__,
-                                             self.b.id, self.b.__dict__)
-        b_srt = self.b.__str__()
-        self.assertEqual(b_srt_string, b_srt)
+        state_fstr = "[{}] ({}) {}".format(self.state_test.__class__.__name__,
+                                           self.state_test.id,
+                                           self.state_test.__dict__)
+        state_srt = self.state_test.__str__()
+        self.assertEqual(state_fstr, state_srt)
+
+    def tearDown(self):
+        """ Method to leave each test
+            """
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        if os.path.exists("original_file.json"):
+            os.rename("original_file.json", "file.json")

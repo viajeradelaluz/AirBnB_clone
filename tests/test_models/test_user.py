@@ -2,6 +2,7 @@
 """ Module with Unittest for the User class.
     """
 import inspect
+import os
 import unittest
 
 from models.user import User
@@ -10,6 +11,12 @@ from models.user import User
 class TestUser(unittest.TestCase):
     """ Testing the User class of the program.
         """
+
+    def setUp(self):
+        """ Method to initializate each test
+            """
+        if os.path.exists("file.json"):
+            os.rename("file.json", "original_file.json")
 
     def test_module_documentation(self):
         """ Test if User module is documented.
@@ -66,3 +73,11 @@ class TestUser(unittest.TestCase):
                                           user_test.id, user_test.__dict__)
         user_str = user_test.__str__()
         self.assertEqual(user_fstr, user_str)
+
+    def tearDown(self):
+        """ Method to leave each test
+            """
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        if os.path.exists("original_file.json"):
+            os.rename("original_file.json", "file.json")
