@@ -5,7 +5,6 @@ import inspect
 import json
 import os
 import unittest
-import uuid
 
 from models.amenity import Amenity
 
@@ -14,11 +13,12 @@ class TestBaseModel(unittest.TestCase):
     """ Testing the Amenity class of the program.
         """
 
-    def setUp(self):
+    @classmethod
+    def setUp(cls):
         """ Method to prepare each single test.
             """
-        self.b = Amenity()
-        self.b.save()
+        cls.amenity_test = Amenity()
+        cls.amenity_test.name = "Wi-fi"
 
     def test_module_documentation(self):
         """ Test if Amenity module is documented.
@@ -40,46 +40,37 @@ class TestBaseModel(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic Amenity instances.
             """
-        self.assertIsInstance(self.b, Amenity)
-        self.assertTrue(hasattr(self.b, "id"))
-        self.assertTrue(hasattr(self.b, "created_at"))
-        self.assertTrue(hasattr(self.b, "updated_at"))
+        self.assertIsInstance(self.amenity_test, Amenity)
+        self.assertTrue(hasattr(self.amenity_test, "id"))
+        self.assertTrue(hasattr(self.amenity_test, "created_at"))
+        self.assertTrue(hasattr(self.amenity_test, "updated_at"))
 
-    def test_base_id_assigment(self):
-        """ Test if the id of the instance is UUID v4.
+    def test_base_assigment_attributes(self):
+        """ Test Amenity instance assigment attributes.
             """
-        uuid_v4 = uuid.UUID(self.b.id, version=4)
-        self.assertEqual(str(uuid_v4), self.b.id)
-
-    def test_base_assigment_arguments(self):
-        """ Test Amenity instance assigment with arguments.
-            """
-        b = Amenity(15)
-        b.name = "I'm a Amenity"
-        self.assertTrue(hasattr(b, "name"))
-        self.assertEqual(b.to_dict()["name"], "I'm a Amenity")
-        self.assertFalse(hasattr(b, "15"))
+        self.assertTrue(hasattr(self.amenity_test, "name"))
+        self.assertEqual(self.amenity_test.name, "Wi-fi")
 
     def test_save_method(self):
         """ Check the save() method.
             """
-        b_save = Amenity()
-        b_save.save()
+        self.amenity_test.save()
         self.assertTrue(os.path.exists("file.json"))
         with open("file.json") as file_opened:
             file_dict = json.load(file_opened)
-        self.assertTrue(b_save.to_dict() in file_dict.values())
+        self.assertTrue(self.amenity_test.to_dict() in file_dict.values())
 
     def test_to_dict_method(self):
         """ Check the to_dict() method.
             """
-        obj_as_dict = self.b.to_dict()
-        self.assertEqual(self.b.id, obj_as_dict["id"])
+        obj_as_dict = self.amenity_test.to_dict()
+        self.assertEqual(self.amenity_test.id, obj_as_dict["id"])
 
     def test_str_method(self):
         """ Check the __str__() method.
             """
-        b_srt_string = "[{}] ({}) {}".format(self.b.__class__.__name__,
-                                             self.b.id, self.b.__dict__)
-        b_srt = self.b.__str__()
-        self.assertEqual(b_srt_string, b_srt)
+        amnt_fstr = "[{}] ({}) {}".format(self.amenity_test.__class__.__name__,
+                                          self.amenity_test.id,
+                                          self.amenity_test.__dict__)
+        amenity_str = self.amenity_test.__str__()
+        self.assertEqual(amnt_fstr, amenity_str)

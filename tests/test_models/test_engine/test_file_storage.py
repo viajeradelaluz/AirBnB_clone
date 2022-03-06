@@ -12,11 +12,11 @@ class TestBaseModel(unittest.TestCase):
     """ Testing the FileStorage class of the program.
         """
 
-    def setUp(self):
+    @classmethod
+    def setUp(cls):
         """ Method to prepare each single test.
             """
-        self.b = FileStorage()
-        self.b.save()
+        cls.storage_test = FileStorage()
 
     def test_module_documentation(self):
         """ Test if FileStorage module is documented.
@@ -38,24 +38,22 @@ class TestBaseModel(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic FileStorage instances.
             """
-        self.assertIsInstance(self.b, FileStorage)
+        self.assertIsInstance(self.storage_test, FileStorage)
 
     def test_save_method(self):
         """ Check the save() method.
             """
-        b1 = BaseModel()
-        self.b.new(b1)
-        self.b.save()
-        self.assertTrue(self.b.__file_path)
-        self.assertTrue(self.b.__objects)
+        self.storage_test.save()
+        self.assertFalse(hasattr(self.storage_test, "__file_path"))
+        self.assertFalse(hasattr(self.storage_test, "__objects"))
 
     def test_reload_method(self):
         """ Check the reload() method.
             """
-        b1 = BaseModel()
-        self.b.new(b1)
-        self.b.save()
-        key_to_search = "BaseModel.{}".format(b1.id)
-        self.b.reload()
-        file_dict = self.b.all()
+        base_model_test = BaseModel()
+        self.storage_test.new(base_model_test)
+        self.storage_test.save()
+        key_to_search = "BaseModel.{}".format(base_model_test.id)
+        self.storage_test.reload()
+        file_dict = self.storage_test.all()
         self.assertTrue(key_to_search in file_dict.keys())

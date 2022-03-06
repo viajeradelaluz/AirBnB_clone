@@ -8,7 +8,7 @@ from models.base_model import BaseModel
 class Amenity(BaseModel):
     """ Inherits from BaseModel, used to manage Amenity info.
         """
-    name = ""
+    name = str()
 
     def __init__(self, *args, **kargs):
         """ Initialize the Amenity class.

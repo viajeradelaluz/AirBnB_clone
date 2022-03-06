@@ -9,8 +9,8 @@ class City(BaseModel):
     """ Inherits from BaseModel, used to manage City info.
         """
 
-    state_id = ""
-    name = ""
+    state_id = str()
+    name = str()
 
     def __init__(self, *args, **kwars):
         """ Initialize the City class.

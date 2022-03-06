@@ -5,7 +5,6 @@ import inspect
 import json
 import os
 import unittest
-import uuid
 
 from models.city import City
 
@@ -14,11 +13,13 @@ class TestBaseModel(unittest.TestCase):
     """ Testing the City class of the program.
         """
 
-    def setUp(self):
+    @classmethod
+    def setUp(cls):
         """ Method to prepare each single test.
             """
-        self.b = City()
-        self.b.save()
+        cls.city_test = City()
+        cls.city_test.state_id = "22"
+        cls.city_test.name = "Kyiv"
 
     def test_module_documentation(self):
         """ Test if City module is documented.
@@ -40,46 +41,39 @@ class TestBaseModel(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic City instances.
             """
-        self.assertIsInstance(self.b, City)
-        self.assertTrue(hasattr(self.b, "id"))
-        self.assertTrue(hasattr(self.b, "created_at"))
-        self.assertTrue(hasattr(self.b, "updated_at"))
+        self.assertIsInstance(self.city_test, City)
+        self.assertTrue(hasattr(self.city_test, "id"))
+        self.assertTrue(hasattr(self.city_test, "created_at"))
+        self.assertTrue(hasattr(self.city_test, "updated_at"))
 
-    def test_base_id_assigment(self):
-        """ Test if the id of the instance is UUID v4.
+    def test_base_assigment_attributes(self):
+        """ Test City instance assigment with attributes.
             """
-        uuid_v4 = uuid.UUID(self.b.id, version=4)
-        self.assertEqual(str(uuid_v4), self.b.id)
-
-    def test_base_assigment_arguments(self):
-        """ Test City instance assigment with arguments.
-            """
-        b = City(15)
-        b.name = "I'm a City"
-        self.assertTrue(hasattr(b, "name"))
-        self.assertEqual(b.to_dict()["name"], "I'm a City")
-        self.assertFalse(hasattr(b, "15"))
+        self.assertTrue(hasattr(self.city_test, "state_id"))
+        self.assertEqual(self.city_test.to_dict()["state_id"], "22")
+        self.assertTrue(hasattr(self.city_test, "name"))
+        self.assertEqual(self.city_test.to_dict()["name"], "Kyiv")
 
     def test_save_method(self):
         """ Check the save() method.
             """
-        b_save = City()
-        b_save.save()
+        self.city_test.save()
         self.assertTrue(os.path.exists("file.json"))
         with open("file.json") as file_opened:
             file_dict = json.load(file_opened)
-        self.assertTrue(b_save.to_dict() in file_dict.values())
+        self.assertTrue(self.city_test.to_dict() in file_dict.values())
 
     def test_to_dict_method(self):
         """ Check the to_dict() method.
             """
-        obj_as_dict = self.b.to_dict()
-        self.assertEqual(self.b.id, obj_as_dict["id"])
+        obj_as_dict = self.city_test.to_dict()
+        self.assertEqual(self.city_test.id, obj_as_dict["id"])
 
     def test_str_method(self):
         """ Check the __str__() method.
             """
-        b_srt_string = "[{}] ({}) {}".format(self.b.__class__.__name__,
-                                             self.b.id, self.b.__dict__)
-        b_srt = self.b.__str__()
-        self.assertEqual(b_srt_string, b_srt)
+        city_fstr = "[{}] ({}) {}".format(self.city_test.__class__.__name__,
+                                          self.city_test.id,
+                                          self.city_test.__dict__)
+        city_str = self.city_test.__str__()
+        self.assertEqual(city_fstr, city_str)

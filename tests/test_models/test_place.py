@@ -5,7 +5,6 @@ import inspect
 import json
 import os
 import unittest
-import uuid
 
 from models.place import Place
 
@@ -14,11 +13,23 @@ class TestBaseModel(unittest.TestCase):
     """ Testing the Place class of the program.
         """
 
-    def setUp(self):
+    @classmethod
+    def setUp(cls):
         """ Method to prepare each single test.
             """
-        self.b = Place()
-        self.b.save()
+        cls.place_test = Place()
+        cls.place_test.city_id = "22"
+        cls.place_test.user_id = "1542"
+        cls.place_test.name = "Igloo 12"
+        cls.place_test.description = "Arctic Fox Igloss"
+        cls.place_test.number_rooms = 3
+        cls.place_test.number_bathrooms = 1
+        cls.place_test.max_guest = 4
+        cls.place_test.price_by_night = 45
+        cls.place_test.latitude = 71.7069
+        cls.place_test.longitude = 42.6043
+        cls.place_test.amenity_ids = ["Lakeside location", "Own kitchenette"
+                                      "Private Sauna", "Sky Panorama View"]
 
     def test_module_documentation(self):
         """ Test if Place module is documented.
@@ -40,46 +51,57 @@ class TestBaseModel(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic Place instances.
             """
-        self.assertIsInstance(self.b, Place)
-        self.assertTrue(hasattr(self.b, "id"))
-        self.assertTrue(hasattr(self.b, "created_at"))
-        self.assertTrue(hasattr(self.b, "updated_at"))
+        self.assertIsInstance(self.place_test, Place)
+        self.assertTrue(hasattr(self.place_test, "id"))
+        self.assertTrue(hasattr(self.place_test, "created_at"))
+        self.assertTrue(hasattr(self.place_test, "updated_at"))
 
-    def test_base_id_assigment(self):
-        """ Test if the id of the instance is UUID v4.
+    def test_base_assigment_attributes(self):
+        """ Test Place instance assigment with attributes
             """
-        uuid_v4 = uuid.UUID(self.b.id, version=4)
-        self.assertEqual(str(uuid_v4), self.b.id)
+        self.assertTrue(hasattr(self.place_test, "city_id"))
+        self.assertTrue(hasattr(self.place_test, "user_id"))
+        self.assertTrue(hasattr(self.place_test, "name"))
+        self.assertTrue(hasattr(self.place_test, "description"))
+        self.assertTrue(hasattr(self.place_test, "number_rooms"))
+        self.assertTrue(hasattr(self.place_test, "max_guest"))
+        self.assertTrue(hasattr(self.place_test, "price_by_night"))
+        self.assertTrue(hasattr(self.place_test, "latitude"))
+        self.assertTrue(hasattr(self.place_test, "longitude"))
+        self.assertTrue(hasattr(self.place_test, "amenity_ids"))
 
-    def test_base_assigment_arguments(self):
-        """ Test Place instance assigment with arguments.
-            """
-        b = Place(15)
-        b.name = "I'm a Place"
-        self.assertTrue(hasattr(b, "name"))
-        self.assertEqual(b.to_dict()["name"], "I'm a Place")
-        self.assertFalse(hasattr(b, "15"))
+        self.assertIsInstance(self.place_test.city_id, str)
+        self.assertIsInstance(self.place_test.user_id, str)
+        self.assertIsInstance(self.place_test.name, str)
+        self.assertIsInstance(self.place_test.description, str)
+        self.assertIsInstance(self.place_test.number_rooms, int)
+        self.assertIsInstance(self.place_test.number_bathrooms, int)
+        self.assertIsInstance(self.place_test.max_guest, int)
+        self.assertIsInstance(self.place_test.price_by_night, int)
+        self.assertIsInstance(self.place_test.latitude, float)
+        self.assertIsInstance(self.place_test.longitude, float)
+        self.assertIsInstance(self.place_test.amenity_ids, list)
 
     def test_save_method(self):
         """ Check the save() method.
             """
-        b_save = Place()
-        b_save.save()
+        self.place_test.save()
         self.assertTrue(os.path.exists("file.json"))
         with open("file.json") as file_opened:
             file_dict = json.load(file_opened)
-        self.assertTrue(b_save.to_dict() in file_dict.values())
+        self.assertTrue(self.place_test.to_dict() in file_dict.values())
 
     def test_to_dict_method(self):
         """ Check the to_dict() method.
             """
-        obj_as_dict = self.b.to_dict()
-        self.assertEqual(self.b.id, obj_as_dict["id"])
+        obj_as_dict = self.place_test.to_dict()
+        self.assertEqual(self.place_test.id, obj_as_dict["id"])
 
     def test_str_method(self):
         """ Check the __str__() method.
             """
-        b_srt_string = "[{}] ({}) {}".format(self.b.__class__.__name__,
-                                             self.b.id, self.b.__dict__)
-        b_srt = self.b.__str__()
-        self.assertEqual(b_srt_string, b_srt)
+        place_fstr = "[{}] ({}) {}".format(self.place_test.__class__.__name__,
+                                           self.place_test.id,
+                                           self.place_test.__dict__)
+        place_str = self.place_test.__str__()
+        self.assertEqual(place_fstr, place_str)
