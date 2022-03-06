@@ -52,15 +52,6 @@ class TestState(unittest.TestCase):
         self.assertTrue(hasattr(self.state_test, "name"))
         self.assertEqual(self.state_test.to_dict()["name"], "Cundinamarca")
 
-    def test_save_method(self):
-        """ Check the save() method.
-            """
-        self.state_test.save()
-        self.assertTrue(os.path.exists("file.json"))
-        with open("file.json") as file_opened:
-            file_dict = json.load(file_opened)
-        self.assertTrue(self.state_test.to_dict() in file_dict.values())
-
     def test_to_dict_method(self):
         """ Check the to_dict() method.
             """
