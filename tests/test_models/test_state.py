@@ -16,7 +16,6 @@ class TestState(unittest.TestCase):
         """ Method to prepare each single test.
             """
         self.state_test = State()
-        self.state_test.name = "Cundinamarca"
         if os.path.exists("file.json"):
             os.rename("file.json", "original_file.json")
 
@@ -40,7 +39,7 @@ class TestState(unittest.TestCase):
     def test_basic_base_assigment(self):
         """ Create some basic State instances.
             """
-        self.assertIsInstance(self.state_test, BaseModel)
+        self.assertTrue(issubclass(State, BaseModel))
         self.assertIsInstance(self.state_test, State)
         self.assertTrue(hasattr(self.state_test, "id"))
         self.assertTrue(hasattr(self.state_test, "created_at"))
@@ -50,22 +49,6 @@ class TestState(unittest.TestCase):
         """ Test State instance assigment with arguments.
             """
         self.assertTrue(hasattr(self.state_test, "name"))
-        self.assertEqual(self.state_test.to_dict()["name"], "Cundinamarca")
-
-    def test_to_dict_method(self):
-        """ Check the to_dict() method.
-            """
-        obj_as_dict = self.state_test.to_dict()
-        self.assertEqual(self.state_test.id, obj_as_dict["id"])
-
-    def test_str_method(self):
-        """ Check the __str__() method.
-            """
-        state_fstr = "[{}] ({}) {}".format(self.state_test.__class__.__name__,
-                                           self.state_test.id,
-                                           self.state_test.__dict__)
-        state_srt = self.state_test.__str__()
-        self.assertEqual(state_fstr, state_srt)
 
     def tearDown(self):
         """ Method to leave each test
