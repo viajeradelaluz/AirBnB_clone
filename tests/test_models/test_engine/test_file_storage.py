@@ -2,13 +2,14 @@
 """ Module with Unittest for the FileStorage class.
     """
 import inspect
+import os.path as path
 import unittest
 
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 
 
-class TestBaseModel(unittest.TestCase):
+class TestFileStorage(unittest.TestCase):
     """ Testing the FileStorage class of the program.
         """
 
@@ -16,7 +17,6 @@ class TestBaseModel(unittest.TestCase):
         """ Method to prepare each single test.
             """
         self.storage_test = FileStorage()
-        self.storage_test.save()
 
     def test_module_documentation(self):
         """ Test if FileStorage module is documented.
@@ -43,13 +43,9 @@ class TestBaseModel(unittest.TestCase):
     def test_save_method(self):
         """ Check the save() method.
             """
-        base_model_test = BaseModel()
-        self.storage_test.new(base_model_test)
         self.storage_test.save()
-        self.assertTrue(self.storage_test._FileStorage__file_path)
-        self.assertTrue(self.storage_test._FileStorage__objects)
-        self.assertFalse(hasattr(self.storage_test, "__file_path"))
-        self.assertFalse(hasattr(self.storage_test, "__objects"))
+        self.assertTrue(path.exists(self.storage_test._FileStorage__file_path))
+        self.assertTrue(self.storage_test.all())
 
     def test_reload_method(self):
         """ Check the reload() method.
