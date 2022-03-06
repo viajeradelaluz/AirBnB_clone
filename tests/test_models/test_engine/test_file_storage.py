@@ -12,11 +12,10 @@ class TestBaseModel(unittest.TestCase):
     """ Testing the FileStorage class of the program.
         """
 
-    @classmethod
-    def setUp(cls):
+    def setUp(self):
         """ Method to prepare each single test.
             """
-        cls.storage_test = FileStorage()
+        self.storage_test = FileStorage()
 
     def test_module_documentation(self):
         """ Test if FileStorage module is documented.
