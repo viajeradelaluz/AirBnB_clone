@@ -16,6 +16,7 @@ class TestBaseModel(unittest.TestCase):
         """ Method to prepare each single test.
             """
         self.storage_test = FileStorage()
+        self.storage_test.save()
 
     def test_module_documentation(self):
         """ Test if FileStorage module is documented.
