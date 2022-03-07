@@ -132,6 +132,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
     def do_count(self, line):
+        """ Retrieve the number of instances of a class.
+            """
         args = line.split()
         class_count = 0
         file_list = (storage.all().keys())
@@ -142,6 +144,8 @@ class HBNBCommand(cmd.Cmd):
         print(class_count)
 
     def do_User(self, line):
+        """ Retrieve an instance based on User.
+            """
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
@@ -150,6 +154,8 @@ class HBNBCommand(cmd.Cmd):
         eval("self.do_{}".format(execute))(exe_line)
 
     def do_Amenity(self, line):
+        """ Retrieve an instance based on Amenity.
+            """
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
@@ -158,6 +164,8 @@ class HBNBCommand(cmd.Cmd):
         eval("self.do_{}".format(execute))(exe_line)
 
     def do_BaseModel(self, line):
+        """ Retrieve an instance based on BaseModel.
+            """
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
@@ -166,6 +174,8 @@ class HBNBCommand(cmd.Cmd):
         eval("self.do_{}".format(execute))(exe_line)
 
     def do_City(self, line):
+        """ Retrieve an instance based on City.
+            """
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
@@ -174,6 +184,8 @@ class HBNBCommand(cmd.Cmd):
         eval("self.do_{}".format(execute))(exe_line)
 
     def do_Place(self, line):
+        """ Retrieve an instance based on Place.
+            """
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
@@ -182,6 +194,8 @@ class HBNBCommand(cmd.Cmd):
         eval("self.do_{}".format(execute))(exe_line)
 
     def do_Review(self, line):
+        """ Retrieve an instance based on Review.
+            """
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
@@ -190,6 +204,8 @@ class HBNBCommand(cmd.Cmd):
         eval("self.do_{}".format(execute))(exe_line)
 
     def do_State(self, line):
+        """ Retrieve an instance based on State.
+            """
         in_line = line.split('.')
         split_line = in_line[1].split('(')
         execute = split_line[0]
