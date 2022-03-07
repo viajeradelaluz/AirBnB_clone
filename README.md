@@ -110,10 +110,10 @@ This is a brief description of the commands enabled in the command interpreter t
 
 ## Authors
 
-| Johanna Alfonso                                                                    | Alejandro Pineda                                                             |
-|:---------------------------------------------------------------------------------- |:---------------------------------------------------------------------------- |
+| Johanna Alfonso  | Alejandro Pineda  |
+|:---------------: |:----------------: |
 | ![](https://github-readme-stats.vercel.app/api/top-langs/?username=viajeradelaluz) | ![](https://github-readme-stats.vercel.app/api/top-langs/?username=Apinedas) |
 
 ## More information
 
-[Holberton School](https://www.holbertonschool.com/)
+[Holberton School](https://www.holbertonschool.com)
