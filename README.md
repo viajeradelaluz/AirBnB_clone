@@ -1,5 +1,7 @@
 # AirBnB clone - The console
 
+![](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)![](    https://img.shields.io/badge/powershell-5391FE?style=for-the-badge&logo=powershell&logoColor=white)
+
 The AirBnB clone project starts with the goal of the project is to deploy on your server a simple copy of the AirBnB website. Since this is the first part of the project, only a command interpreter to manipulate data without a visual interface, like in a Shell (perfect for development and debugging), and a website (the front-end) that shows the final product to everybody are implemented.
 
 ## Command Interpreter Features
@@ -88,7 +90,7 @@ This is a brief description of the commands enabled in the command interpreter t
 ~/airbnb_clone$
 ```
 
-### Working with City instances
+#### Working with City instances
 
 ```powershell
 ~/airbnb_clone$ ./console.py
@@ -108,7 +110,9 @@ This is a brief description of the commands enabled in the command interpreter t
 
 ## Authors
 
-Johanna Alfonso | Alejandro Pineda
+| Johanna Alfonso                                                                    | Alejandro Pineda                                                             |
+|:---------------------------------------------------------------------------------- |:---------------------------------------------------------------------------- |
+| ![](https://github-readme-stats.vercel.app/api/top-langs/?username=viajeradelaluz) | ![](https://github-readme-stats.vercel.app/api/top-langs/?username=Apinedas) |
 
 ## More information
 
